@@ -1,0 +1,64 @@
+/* BB Reviews. Farben und Maße über CSS-Variablen je Website anpassbar, z. B.
+   .bbr{--bbr-accent:#320751;--bbr-radius:20px} */
+/* Vorgaben mit :where(), damit jede Regel der Website sie überschreibt, egal in welcher Reihenfolge geladen wird. */
+:where(.bbr){
+  --bbr-accent:#1f2937;
+  --bbr-star:#f5a623;
+  --bbr-star-off:#d9d9d9;
+  --bbr-text:#555;
+  --bbr-bg:#fff;
+  --bbr-border:rgba(0,0,0,.14);
+  --bbr-radius:12px;
+  --bbr-gap:20px;
+  --bbr-pad:25px 20px;
+  --bbr-align:center;
+}
+.bbr{position:relative}
+.bbr *,.bbr *::before,.bbr *::after{box-sizing:border-box}
+.bbr-title{font-weight:700;margin:0 0 16px;text-align:var(--bbr-align)}
+.bbr-track{list-style:none !important;margin:0 !important;padding:0 !important;display:grid;gap:var(--bbr-gap);grid-template-columns:repeat(var(--bbr-cols),minmax(0,1fr))}
+.bbr--carousel .bbr-track{
+  display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;
+  scrollbar-width:none;-ms-overflow-style:none;padding-bottom:2px !important;
+}
+.bbr--carousel .bbr-track::-webkit-scrollbar{display:none}
+.bbr--carousel .bbr-track:focus-visible{outline:2px solid var(--bbr-accent);outline-offset:4px}
+.bbr-card{list-style:none !important;margin:0 !important;padding:0 !important;min-width:0}
+.bbr--carousel .bbr-card{flex:0 0 calc((100% - (var(--bbr-cols) - 1) * var(--bbr-gap)) / var(--bbr-cols));scroll-snap-align:start}
+.bbr-card-inner{
+  height:100%;display:flex;flex-direction:column;gap:12px;text-align:var(--bbr-align);
+  background:var(--bbr-bg);border:1px solid var(--bbr-border);border-radius:var(--bbr-radius);padding:var(--bbr-pad);
+}
+.bbr-stars{display:inline-flex;gap:2px;justify-content:var(--bbr-align);line-height:1}
+.bbr-star{fill:var(--bbr-star-off);flex:none}
+.bbr-star.is-on{fill:var(--bbr-star)}
+.bbr-headline{margin:0 !important;padding:0 !important;font-weight:700;font-style:italic;color:var(--bbr-text);line-height:1.5}
+.bbr-text{color:var(--bbr-text);font-style:italic;line-height:1.5}
+.bbr-text p{margin:0 0 .6em;padding:0}
+.bbr-text p:last-child{margin-bottom:0}
+.bbr-text.is-clamped{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:var(--bbr-lines);line-clamp:var(--bbr-lines);overflow:hidden}
+.bbr-more{
+  align-self:var(--bbr-more-align,center);background:none;border:0;padding:0;margin:-4px 0 0;cursor:pointer;
+  color:var(--bbr-accent);font:inherit;font-size:.9em;font-weight:600;text-decoration:underline;
+}
+.bbr-name{margin:auto 0 0 !important;padding:0 !important;font-weight:700;color:var(--bbr-accent);line-height:1.3}
+.bbr-meta{margin:-6px 0 0 !important;padding:0 !important;font-size:.82em;color:var(--bbr-text);line-height:1.4}
+.bbr-meta a{color:inherit;text-decoration:underline}
+.bbr-nav{display:flex;gap:8px;justify-content:flex-end;margin:0 0 12px}
+.bbr-nav button{
+  width:38px;height:38px;border-radius:50%;border:1px solid var(--bbr-border);background:var(--bbr-bg);
+  color:var(--bbr-accent);font-size:22px;line-height:1;cursor:pointer;padding:0 0 3px;
+}
+.bbr-nav button:hover,.bbr-nav button:focus-visible{background:var(--bbr-accent);color:#fff;border-color:var(--bbr-accent)}
+.bbr-nav button[disabled]{opacity:.35;cursor:default;background:var(--bbr-bg);color:var(--bbr-accent)}
+.bbr-empty{padding:12px 16px;border:1px dashed #b4b9be;border-radius:6px;color:#50575e}
+
+@media (max-width:980px){
+  .bbr{--bbr-cols:2 !important}
+}
+@media (max-width:640px){
+  .bbr{--bbr-cols:1 !important}
+}
+@media (prefers-reduced-motion:reduce){
+  .bbr--carousel .bbr-track{scroll-behavior:auto}
+}
